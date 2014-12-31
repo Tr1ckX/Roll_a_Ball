@@ -1,10 +1,14 @@
 ﻿#pragma strict
 
-function Start () {
-
-}
-
 var speed : float;
+var countText : GUIText;
+private var count : int;
+
+function Start ()
+{
+	count = 0;
+	SetCountText();
+}
 
 function FixedUpdate ()
 {
@@ -15,4 +19,19 @@ function FixedUpdate ()
 	
 	rigidbody.AddForce (movement * speed * Time.deltaTime);
 
+}
+
+function OnTriggerEnter (other : Collider)
+{
+	if(other.gameObject.tag == "PickUp")
+	{
+		other.gameObject.SetActive(false);
+		count += 1;
+		SetCountText();
+	}
+}
+
+function SetCountText()
+{
+	countText.text = "Count: " + count.ToString();
 }
